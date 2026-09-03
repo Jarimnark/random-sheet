@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>สุ่มไอเดียโปรเจกต์ · Product × TSIC Business Domain</title>
+<meta name="description" content="สุ่มว่าจะสร้างอะไร (เว็บ แอป IoT ...) ให้ธุรกิจแบบไหน จากโดเมนธุรกิจกว่า 1,000 รายการที่อ้างอิงรหัส TSIC ของไทย">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎲</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&family=JetBrains+Mono:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <h1>🎲 สุ่มไอเดียโปรเจกต์</h1>
+  <p class="sub">สุ่ม 2 ส่วน — <b>จะสร้างอะไร</b> × <b>ให้ธุรกิจแบบไหน</b> · โดเมนธุรกิจ <b id="totalCount">—</b> รายการ อ้างอิงรหัส TSIC ไทย</p>
+</header>
+
+<main>
+  <section class="reels">
+    <article class="reel" id="reelProduct">
+      <div class="reel-head">
+        <span class="reel-label">1 · จะสร้างอะไร <span class="en">what to make</span></span>
+        <div class="reel-btns">
+          <button class="mini" data-lock="product" title="ล็อกไม่ให้สุ่มใหม่" aria-pressed="false">🔓</button>
+          <button class="mini" data-reroll="product" title="สุ่มเฉพาะช่องนี้ (คีย์ 1)">🔄</button>
+        </div>
+      </div>
+      <div class="slot" id="slotProduct">
+        <div class="slot-emoji">🎯</div>
+        <div class="slot-main">กดปุ่มสุ่มเพื่อเริ่ม</div>
+        <div class="slot-sub">press the roll button</div>
+      </div>
+      <dl class="detail" id="detailProduct"></dl>
+    </article>
+
+    <div class="times">×</div>
+
+    <article class="reel" id="reelDomain">
+      <div class="reel-head">
+        <span class="reel-label">2 · โดเมนธุรกิจ <span class="en">business domain</span></span>
+        <div class="reel-btns">
+          <button class="mini" data-lock="domain" title="ล็อกไม่ให้สุ่มใหม่" aria-pressed="false">🔓</button>
+          <button class="mini" data-reroll="domain" title="สุ่มเฉพาะช่องนี้ (คีย์ 2)">🔄</button>
+        </div>
+      </div>
+      <div class="slot" id="slotDomain">
+        <div class="slot-emoji">🏭</div>
+        <div class="slot-main">ยังไม่ได้สุ่ม</div>
+        <div class="slot-sub">TSIC —</div>
+      </div>
+      <dl class="detail" id="detailDomain"></dl>
+    </article>
+  </section>
+
+  <section class="actions">
+    <button id="rollBtn" class="roll">🎲 สุ่มเลย <span class="key">Space</span></button>
+    <button id="starBtn" class="ghost" disabled>⭐ เก็บไอเดียนี้</button>
+    <button id="copyBtn" class="ghost" disabled>📋 คัดลอก</button>
+    <button id="shareBtn" class="ghost" disabled>🔗 ลิงก์ผลลัพธ์</button>
+  </section>
+
+  <p class="brief" id="brief" hidden></p>
+  <p class="warn" id="warn" hidden></p>
+
+  <section class="panel">
+    <details>
+      <summary>⚙️ ตัวกรอง <span class="pool" id="poolInfo"></span></summary>
+      <div class="filters">
+        <fieldset>
+          <legend>ประเภทสิ่งที่จะสร้าง <span class="en">product category</span></legend>
+          <div id="catFilters" class="chips"></div>
+          <div class="fset-btns">
+            <button class="link" data-all="cat">เลือกทั้งหมด</button>
+            <button class="link" data-none="cat">ไม่เลือกเลย</button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>หมวด TSIC <span class="en">TSIC section A–U</span></legend>
+          <div id="secFilters" class="chips sec"></div>
+          <div class="fset-btns">
+            <button class="link" data-all="sec">เลือกทั้งหมด</button>
+            <button class="link" data-none="sec">ไม่เลือกเลย</button>
+          </div>
+        </fieldset>
+        <fieldset>
+          <legend>คำค้นในโดเมนธุรกิจ <span class="en">keyword</span></legend>
+          <input type="search" id="kw" placeholder="เช่น hospital, farm, retail, 4791">
+        </fieldset>
+      </div>
+    </details>
+  </section>
+
+  <section class="panel two-col">
+    <div>
+      <h2>⭐ ไอเดียที่เก็บไว้ <span class="count" id="savedCount">0</span></h2>
+      <ul class="list" id="savedList"><li class="empty">ยังไม่มีไอเดียที่เก็บไว้</li></ul>
+      <button class="link" id="clearSaved" hidden>ลบทั้งหมด</button>
+    </div>
+    <div>
+      <h2>🕘 ประวัติการสุ่ม</h2>
+      <ul class="list" id="histList"><li class="empty">ยังไม่มีประวัติ</li></ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p><b>เกี่ยวกับรหัส TSIC</b> — โดเมนธุรกิจทุกรายการผูกกับรหัส <b>TSIC 4 หลัก</b> (ระดับ class)
+  ซึ่ง TSIC 2009 ของไทยอ้างอิงตาม ISIC Rev.4 ในระดับ 4 หลัก จึงนำไปเทียบกับรายการ TSIC ทางการได้
+  หนึ่งรหัสมีได้หลายไอเดีย เพราะหนึ่ง class คืออุตสาหกรรมทั้งหมวด</p>
+  <p>ก่อนนำรหัสไปใช้จดทะเบียนหรือยื่นเอกสาร ให้ตรวจ <b>รหัสย่อย 5 หลัก</b> กับแหล่งข้อมูลทางการ —
+  สำนักงานสถิติแห่งชาติ (NSO) และ <a href="https://datawarehouse.dbd.go.th/" target="_blank" rel="noopener">DBD DataWarehouse</a> ของกรมพัฒนาธุรกิจการค้า</p>
+  <p class="dim">ข้อมูลทั้งหมดฝังอยู่ในหน้าเว็บ ไม่มีเซิร์ฟเวอร์ ไม่มีการเก็บข้อมูลผู้ใช้ · ไอเดียที่เก็บไว้บันทึกใน localStorage ของเบราว์เซอร์คุณเท่านั้น</p>
+</footer>
+
+<script src="data/product-types.js"></script>
+<script src="data/tsic-domains.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
