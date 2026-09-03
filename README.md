@@ -42,19 +42,23 @@ python3 -m http.server 8000
 
 ## Deploy ขึ้น GitHub Pages
 
-มีให้ 2 ทาง เลือกทางใดทางหนึ่ง
+โค้ดอยู่บน `main` และมี workflow พร้อม deploy แล้ว เหลือ **เปิด Pages หนึ่งครั้ง** ซึ่งต้องทำจากหน้า
+Settings เท่านั้น (workflow เปิดเองไม่ได้ เพราะ `GITHUB_TOKEN` ไม่มีสิทธิ์ระดับ admin ของ repo —
+รันแรกจะขึ้น error `Create Pages site failed: Resource not accessible by integration`)
 
-**ทาง A — GitHub Actions (มีไฟล์ workflow ให้แล้ว)**
-1. merge branch นี้เข้า `main`
-2. ไปที่ **Settings → Pages → Build and deployment → Source** เลือก **GitHub Actions**
-3. workflow `.github/workflows/pages.yml` จะ deploy ทุกครั้งที่ push เข้า `main`
+**ขั้นตอน (ทำครั้งเดียว)**
+1. เปิด **Settings → Pages**
+2. ที่ **Build and deployment → Source** เลือก **GitHub Actions**
+3. ไปที่แท็บ **Actions** → workflow *Deploy to GitHub Pages* → กด **Re-run jobs**
+   (หรือ push commit ใหม่เข้า `main` ก็ได้ workflow จะรันเอง)
 
-**ทาง B — Deploy from a branch (ไม่ต้องใช้ Actions)**
-1. **Settings → Pages → Source** เลือก **Deploy from a branch**
-2. เลือก branch ที่ต้องการ, folder `/ (root)` แล้วกด Save
+เว็บจะขึ้นที่ **https://jarimnark.github.io/random-sheet/** ภายในไม่กี่นาที
 
-เว็บจะอยู่ที่ `https://<username>.github.io/<repo>/` — ทุก path ในโปรเจกต์เป็น relative
-จึงทำงานได้ทั้งใน sub-path และ root domain (มีไฟล์ `.nojekyll` กัน Jekyll processing ไว้แล้ว)
+**ทางเลือก — Deploy from a branch (ไม่ใช้ Actions)**
+ที่ **Settings → Pages → Source** เลือก **Deploy from a branch** → branch `main`, folder `/ (root)`
+แล้วกด Save (ยังต้องเข้า Settings ครั้งแรกเหมือนกัน) — มีไฟล์ `.nojekyll` กัน Jekyll processing ไว้แล้ว
+
+ทุก path ในโปรเจกต์เป็น relative จึงทำงานได้ทั้งใน sub-path (`/random-sheet/`) และ root domain
 
 ## โครงสร้างไฟล์
 
